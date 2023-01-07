@@ -9,7 +9,7 @@
 </p>
 
 > Awesome logging with option save to file
-<img src="https://github.com/damartripamungkas/logging-pretty/blob/master/screenshots/terminal.png?raw=true">
+<img src="https://github.com/damartripamungkas/logging-pretty/blob/main/screenshots/terminal.png?raw=true">
 
 <br>
 
