@@ -1,0 +1,31 @@
+{
+  "name": "logging-pretty",
+  "version": "1.0.0",
+  "description": "Logging your message with pretty color with node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "homepage": "https://github.com/damartripamungkas/logging-pretty",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/damartripamungkas/logging-pretty.git"
+  },
+  "keywords": [
+    "console.log",
+    "logger",
+    "chalk",
+    "logging-color",
+    "node-console",
+    "logging-pretty",
+    "logger-pretty",
+    "log-pretty",
+    "log-beautiful"
+  ],
+  "author": "damartripamungkas",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^4.1.1",
+    "dayjs": "^1.11.7"
+  }
+}
