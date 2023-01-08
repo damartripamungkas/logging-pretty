@@ -22,7 +22,7 @@ npm install logging-pretty
 ## ✏️ Example
 
 ```javascript
-const init = require('../index');
+const init = require('logging-pretty');
 const log = init(); // you can also add file path, example "./db.log"
 log.info("this is information message log");
 log.warn("warn message lorem ipsum");

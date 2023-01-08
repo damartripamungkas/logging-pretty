@@ -1,6 +1,6 @@
 {
   "name": "logging-pretty",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Logging your message with pretty color with node.js",
   "main": "index.js",
   "scripts": {
