@@ -1,4 +1,5 @@
-const { bold, whiteBright, redBright, greenBright, yellowBright, cyanBright, blueBright, red, bgRed } = require('chalk');
+const chalk = require('chalk');
+const { red, green, yellow, cyan, blue, bgRed } = chalk;
 const [getTimeNow, writeLogToFile] = [require('./time'), require('./writeFile')];
 
 /**
@@ -10,20 +11,22 @@ const init = (pathFolderLog = "") => {
     const isFoundPathFolderLog = pathFolderLog.length == 0 ? null : true;
     const renderLog = (tag, msg, chalkFunc, chalkFuncBackground = null) => {
         const time = getTimeNow();
-        console.log(`[${time}] [${chalkFunc(tag)}] ${chalkFuncBackground === null ? whiteBright(msg) : chalkFuncBackground(whiteBright(msg))}`);
+        console.log(`[${time}] [${chalkFunc(tag)}] ${chalkFuncBackground === null ? msg : chalkFuncBackground(msg)}`);
         if (isFoundPathFolderLog === true) {
             writeLogToFile(pathFolderLog, `[${time}] [${tag}] ${msg}`);
         }
     };
 
     return {
-        info: (msg = "") => renderLog("INFO", msg, greenBright),
-        warn: (msg = "") => renderLog("WARN", msg, yellowBright),
-        error: (msg = "") => renderLog("ERRR", msg, redBright),
-        debug: (msg = "") => renderLog("DEBUG", msg, cyanBright),
-        trace: (msg = "") => renderLog("TRACE", msg, blueBright),
+        info: (msg = "") => renderLog("INFO", msg, green),
+        warn: (msg = "") => renderLog("WARN", msg, yellow),
+        error: (msg = "") => renderLog("ERRR", msg, red, red),
+        success: (msg = "") => renderLog("SUCCESS", msg, green, green),
+        debug: (msg = "") => renderLog("DEBUG", msg, cyan),
+        trace: (msg = "") => renderLog("TRACE", msg, blue),
         fatal: (msg = "") => renderLog("FATAL", msg, red, bgRed),
-        custom: (tag = "", msg = "") => renderLog(tag, msg, bold)
+        custom: (tag = "", msg = "", colorTag = {}, colorMsg = {}) => renderLog(tag, msg, colorTag, colorMsg),
+        listColor: chalk
     };
 };
 
