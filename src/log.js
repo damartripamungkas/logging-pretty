@@ -13,7 +13,8 @@ const init = (pathFolderLog = "", tagId = "") => {
     const isFoundPathFolderLog = pathFolderLog.length == 0 ? null : true;
     const renderLog = (tag, msg, chalkFunc, chalkFuncBackground = null) => {
         const time = getTimeNow();
-        console.log(`[${time}] [${chalkFunc(tag)}] ${chalkFuncBackground === null ? msg : chalkFuncBackground(tagId === undefined ? msg : `[${tagId}] ${msg}`)}`);
+        const content = tagId === undefined ? msg : `[${tagId}] ${msg}`;
+        console.log(`[${time}] [${chalkFunc(tag)}] ${chalkFuncBackground === null ? content : chalkFuncBackground(content)}`);
         if (isFoundPathFolderLog === true) {
             writeLogToFile(pathFolderLog, `[${time}] [${tag}] ${msg}`);
         }
