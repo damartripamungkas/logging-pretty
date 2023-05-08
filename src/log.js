@@ -7,11 +7,13 @@ const [getTimeNow, writeLogToFile] = [require('./time'), require('./writeFile')]
  * @param pathFolderLog example "./db.log" if path dont have file, script will create and write new file
  * @returns object
  */
-const init = (pathFolderLog = "") => {
+const init = (pathFolderLog = "", tagId = "") => {
+    if (tagId.length == 0) tagId = undefined;
+
     const isFoundPathFolderLog = pathFolderLog.length == 0 ? null : true;
     const renderLog = (tag, msg, chalkFunc, chalkFuncBackground = null) => {
         const time = getTimeNow();
-        console.log(`[${time}] [${chalkFunc(tag)}] ${chalkFuncBackground === null ? msg : chalkFuncBackground(msg)}`);
+        console.log(`[${time}] [${chalkFunc(tag)}] ${chalkFuncBackground === null ? msg : chalkFuncBackground(tagId === undefined ? msg : `[${tagId}] ${msg}`)}`);
         if (isFoundPathFolderLog === true) {
             writeLogToFile(pathFolderLog, `[${time}] [${tag}] ${msg}`);
         }
