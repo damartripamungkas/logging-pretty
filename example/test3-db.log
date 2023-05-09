@@ -1,0 +1,8 @@
+[2023-01-07 22:42:42:435] [INFO] [SELECTION] this is information message log
+[2023-01-07 22:42:42:445] [WARN] [SELECTION] warn message lorem ipsum
+[2023-01-07 22:42:42:447] [ERRR] [SELECTION] oops!! found error in function getData
+[2023-01-07 22:42:42:450] [DEBUG] [SELECTION] debugging function data start from 1 ~ 5
+[2023-01-07 22:42:42:452] [TRACE] [SELECTION] tracing function data
+[2023-01-07 22:42:42:455] [FATAL] [SELECTION] unhandleError!! found error in function getData
+[2023-01-07 22:42:42:460] [LOREM] [SELECTION] Lorem Ipsum is simply dummy text of the printing and typesetting industry
+[2023-01-07 22:42:42:462] [Feature CronJob] [SELECTION] syncron data to database success with count data 200

@@ -2,7 +2,7 @@
  * test logger with write to file and optional tagId
  */
 const init = require("logging-pretty");
-const log = init("./test/test2-db.log", "SELECTION"); // path your file
+const log = init("./test/test3-db.log", "SELECTION"); // path your file
 log.info("this is information message log");
 log.warn("warn message lorem ipsum");
 log.error("oops!! found error in function getData");
