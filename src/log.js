@@ -5,6 +5,7 @@ const [getTimeNow, writeLogToFile] = [require('./time'), require('./writeFile')]
 /**
  * 
  * @param pathFolderLog example "./db.log" if path dont have file, script will create and write new file
+ * @param tagId this is optional additional tags, example "DATABASE"
  * @returns object
  */
 const init = (pathFolderLog = "", tagId = "") => {
@@ -28,7 +29,7 @@ const init = (pathFolderLog = "", tagId = "") => {
         debug: (msg = "") => renderLog("DEBUG", msg, cyan),
         trace: (msg = "") => renderLog("TRACE", msg, blue),
         fatal: (msg = "") => renderLog("FATAL", msg, red, bgRed),
-        custom: (tag = "", msg = "", colorTag = {}, colorMsg = {}) => renderLog(tag, msg, colorTag, colorMsg),
+        custom: (tag = "", msg = "", colorTag = chalk.bold, colorMsg = chalk.white) => renderLog(tag, msg, colorTag, colorMsg),
         listColor: chalk
     };
 };
