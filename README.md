@@ -8,52 +8,49 @@
   <img src="https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white" alt="nodejs" />
 </p>
 
-> Awesome logging with option save to file
-> <img src="https://raw.githubusercontent.com/damartripamungkas/logging-pretty/master/screenshots/terminal.png">
+> > Awesome logging with option save to file
+> > <img src="https://raw.githubusercontent.com/damartripamungkas/logging-pretty/master/screenshots/terminal.png">
 
 <br>
 
-## 💻 Step to install
+### 💻 Step to install
 
 ```
-npm install logging-pretty
+npm install --production logging-pretty
 ```
 
-## ✏️ Example
+### ✏️ Example
+
+#### Typescript
 
 ```javascript
-// ESM
-// import init from "logging-pretty/index.cjs";
-// const log = init.default();
-
-const init = require("logging-pretty");
-const log = init.default(); // you can also add file path, example "./db.log"
-log.info("this is information message log");
-log.warn("warn message lorem ipsum");
-log.error("oops!! found error in function getData");
-log.debug("debugging function data start from 1 ~ 5");
-log.trace("tracing function data");
-log.fatal("unhandleError!! found error in function getData");
-log.custom(
-  "LOREM",
-  "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
-  log.listColor.bold,
-  log.listColor.whiteBright
-);
-log.custom(
-  "Feature CronJob",
-  "syncron data to database success with count data 200",
-  log.listColor.bold,
-  log.listColor.whiteBright
-);
+import init from "logging-pretty";
+const log = init(null, "anything"); // (optional) change params 1 (null) to file path, example "./db.log"
+log.info("hello world");
 ```
 
-## 🧾 Pre-Requisistes
+#### ESM (import)
+
+```javascript
+import init from "logging-pretty";
+const log = init.default(null, "anything"); // (optional) change params 1 (null) to file path, example "./db.log"
+log.info("hello world");
+```
+
+#### CommonJs (require)
+
+```javascript
+const { default: init } = require("logging-pretty");
+const log = init(null, "anything"); // (optional) change params 1 (null) to file path, example "./db.log"
+log.info("hello world");
+```
+
+### 🧾 Pre-Requisistes
 
 ```
 node.js
 ```
 
-## 📝 License
+### 📝 License
 
 Licensed under the [MIT License](./LICENSE).
