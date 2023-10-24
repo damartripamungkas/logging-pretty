@@ -9,7 +9,7 @@
 </p>
 
 > Awesome logging with option save to file
-> <img src="https://github.com/damartripamungkas/logging-pretty/blob/main/screenshots/terminal.png?raw=true">
+> <img src="https://raw.githubusercontent.com/damartripamungkas/logging-pretty/master/screenshots/terminal.png">
 
 <br>
 
@@ -47,8 +47,6 @@ log.custom(
   log.listColor.whiteBright
 );
 ```
-
-see full example on [here](./example)
 
 ## 🧾 Pre-Requisistes
 
