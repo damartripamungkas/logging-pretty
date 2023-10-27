@@ -1,6 +1,6 @@
 {
   "name": "logging-pretty",
-  "version": "1.1.3",
+  "version": "1.2.0",
   "description": "Logging your message with pretty color with node.js",
   "scripts": {
     "test": "node example/test.js",
@@ -23,8 +23,8 @@
     "log-pretty",
     "log-beautiful"
   ],
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "files": [
     "dist"
