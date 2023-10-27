@@ -26,7 +26,7 @@ npm install --production logging-pretty
 ```javascript
 import init from "logging-pretty";
 const log = init(null, "anything"); // (optional) change params 1 (null) to file path, example "./db.log"
-log.info("hello world");
+log.info("hello world"); // output = [INFO] #anything hello world
 ```
 
 #### ESM (import)
@@ -34,7 +34,7 @@ log.info("hello world");
 ```javascript
 import init from "logging-pretty";
 const log = init.default(null, "anything"); // (optional) change params 1 (null) to file path, example "./db.log"
-log.info("hello world");
+log.info("hello world"); // output = [INFO] #anything hello world
 ```
 
 #### CommonJs (require)
@@ -42,7 +42,7 @@ log.info("hello world");
 ```javascript
 const { default: init } = require("logging-pretty");
 const log = init(null, "anything"); // (optional) change params 1 (null) to file path, example "./db.log"
-log.info("hello world");
+log.info("hello world"); // output = [INFO] #anything hello world
 ```
 
 ### 🧾 Pre-Requisistes
