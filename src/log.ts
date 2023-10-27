@@ -1,21 +1,22 @@
 import chalk from "chalk";
 import getTimeNow from "./time";
 import writeLogToFile from "./writeFile";
-
+type TypeArgs = string | null | undefined;
 /**
  * @param pathFolderLog example "./db.log" if path dont have file, script will create and write new file
  * @returns object
  */
-const init = (pathFolderLog: any, hashTag: string) => {
+const init = (pathFolderLog: TypeArgs, hashTag: TypeArgs) => {
   const { red, green, yellow, cyan, blue, bgRed } = chalk;
-  const isFoundPathFolderLog = pathFolderLog == null || pathFolderLog == undefined ? 0 : pathFolderLog.length == 0 ? null : true;
+  const isFoundPathFolderLog = pathFolderLog === null || pathFolderLog === undefined ? null : true;
   const renderLog = (tag: string, msg: string, chalkFunc: any, chalkFuncBackground: any) => {
     const time = getTimeNow();
+    msg = hashTag === undefined || hashTag === null ? msg : `#${hashTag} ${msg}`;
     chalkFuncBackground = chalkFuncBackground === undefined ? msg : chalkFuncBackground(msg);
-    console.log(`[${time}] [${chalkFunc(tag)}] #${hashTag} ${chalkFuncBackground}`);
+    console.log(`[${time}] [${chalkFunc(tag)}] ${chalkFuncBackground}`);
 
     if (isFoundPathFolderLog === true) {
-      writeLogToFile(pathFolderLog, `[${time}] [${tag}] #${hashTag} ${msg}`);
+      writeLogToFile(pathFolderLog, `[${time}] [${tag}] ${msg}`);
     }
   };
 
