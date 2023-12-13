@@ -10,14 +10,16 @@ import { appendFile } from "fs/promises";
 var writeFile_default = (pathFile, msg) => appendFile(pathFile, msg + "\n");
 
 // src/log.ts
-var init = (pathFolderLog, hashTag) => {
+var init = (pathFolderLog, hashTag, enableConsole = true) => {
   const { red, green, yellow, cyan, blue, bgRed } = chalk;
   const isFoundPathFolderLog = pathFolderLog === null || pathFolderLog === void 0 ? null : true;
   const renderLog = (tag, msg, chalkFunc, chalkFuncBackground) => {
     const time = time_default();
     msg = hashTag === void 0 || hashTag === null ? msg : `#${hashTag} ${msg}`;
     chalkFuncBackground = chalkFuncBackground === void 0 ? msg : chalkFuncBackground(msg);
-    console.log(`[${time}] [${chalkFunc(tag)}] ${chalkFuncBackground}`);
+    if (enableConsole === true) {
+      console.log(`[${time}] [${chalkFunc(tag)}] ${chalkFuncBackground}`);
+    }
     if (isFoundPathFolderLog === true) {
       writeFile_default(pathFolderLog, `[${time}] [${tag}] ${msg}`);
     }
@@ -25,7 +27,7 @@ var init = (pathFolderLog, hashTag) => {
   return {
     info: (msg) => renderLog("INFO", msg, green, void 0),
     warn: (msg) => renderLog("WARN", msg, yellow, yellow),
-    error: (msg) => renderLog("ERRR", msg, red, red),
+    error: (msg) => renderLog("ERR", msg, red, red),
     success: (msg) => renderLog("SUCCESS", msg, green, green),
     debug: (msg) => renderLog("DEBUG", msg, cyan, cyan),
     trace: (msg) => renderLog("TRACE", msg, blue, blue),
