@@ -1,9 +1,9 @@
 {
   "name": "logging-pretty",
-  "version": "1.2.0",
+  "version": "1.5.0",
   "description": "Logging your message with pretty color with node.js",
   "scripts": {
-    "test": "node example/test.js",
+    "test": "node test/index.js",
     "build:tsup": "rm -rf dist/ && tsup ./src/index.ts --format cjs,esm --dts",
     "build:tsc": "rm -rf dist/ && tsc"
   },
