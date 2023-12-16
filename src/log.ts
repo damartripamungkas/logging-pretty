@@ -6,9 +6,14 @@ type TypeArgs = string | null | undefined;
  * @param pathFolderLog example "./db.log" if path dont have file, script will create and write new file
  * @returns object
  */
-const init = (pathFolderLog: TypeArgs, hashTag: TypeArgs, enableConsole = true) => {
+const init = (pathFolderLog: TypeArgs, hashTag: TypeArgs, enableConsole = true, clearBeforeStart = false) => {
   const { red, green, yellow, cyan, blue, bgRed } = chalk;
   const isFoundPathFolderLog = pathFolderLog === null || pathFolderLog === undefined ? null : true;
+  if (clearBeforeStart === true && isFoundPathFolderLog === true) {
+    console.clear();
+    writeLogToFile(pathFolderLog, "");
+  }
+
   const renderLog = (tag: string, msg: string, chalkFunc: any, chalkFuncBackground: any) => {
     const time = getTimeNow();
     msg = hashTag === undefined || hashTag === null ? msg : `#${hashTag} ${msg}`;
