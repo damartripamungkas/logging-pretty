@@ -1,6 +1,6 @@
 import chalk from "chalk";
 import getTimeNow from "./time";
-import writeLogToFile from "./writeFile";
+import { append, write } from "./writeFile";
 type TypeArgs = string | null | undefined;
 /**
  * @param pathFolderLog example "./db.log" if path dont have file, script will create and write new file
@@ -11,7 +11,7 @@ const init = (pathFolderLog: TypeArgs, hashTag: TypeArgs, enableConsole = true, 
   const isFoundPathFolderLog = pathFolderLog === null || pathFolderLog === undefined ? null : true;
   if (clearBeforeStart === true && isFoundPathFolderLog === true) {
     console.clear();
-    writeLogToFile(pathFolderLog, "");
+    write(pathFolderLog, "");
   }
 
   const renderLog = (tag: string, msg: string, chalkFunc: any, chalkFuncBackground: any) => {
@@ -23,7 +23,7 @@ const init = (pathFolderLog: TypeArgs, hashTag: TypeArgs, enableConsole = true, 
     }
 
     if (isFoundPathFolderLog === true) {
-      writeLogToFile(pathFolderLog, `[${time}] [${tag}] ${msg}`);
+      append(pathFolderLog, `[${time}] [${tag}] ${msg}`);
     }
   };
 

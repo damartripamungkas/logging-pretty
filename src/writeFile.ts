@@ -1,3 +1,5 @@
-import { appendFile } from "node:fs/promises";
+import { appendFile, writeFile } from "node:fs/promises";
 
-export default (pathFile: string, msg: string) => appendFile(pathFile, msg + "\n");
+const append = (pathFile: string, msg: string) => appendFile(pathFile, msg + "\n");
+const write = (pathFile: string, msg: string) => writeFile(pathFile, msg);
+export { append, write };
