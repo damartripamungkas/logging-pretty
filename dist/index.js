@@ -42,7 +42,8 @@ var time_default = () => (0, import_dayjs.default)().format("YYYY-MM-DD HH:mm:ss
 
 // src/writeFile.ts
 var import_promises = require("fs/promises");
-var writeFile_default = (pathFile, msg) => (0, import_promises.appendFile)(pathFile, msg + "\n");
+var append = (pathFile, msg) => (0, import_promises.appendFile)(pathFile, msg + "\n");
+var write = (pathFile, msg) => (0, import_promises.writeFile)(pathFile, msg);
 
 // src/log.ts
 var init = (pathFolderLog, hashTag, enableConsole = true, clearBeforeStart = false) => {
@@ -50,7 +51,7 @@ var init = (pathFolderLog, hashTag, enableConsole = true, clearBeforeStart = fal
   const isFoundPathFolderLog = pathFolderLog === null || pathFolderLog === void 0 ? null : true;
   if (clearBeforeStart === true && isFoundPathFolderLog === true) {
     console.clear();
-    writeFile_default(pathFolderLog, "");
+    write(pathFolderLog, "");
   }
   const renderLog = (tag, msg, chalkFunc, chalkFuncBackground) => {
     const time = time_default();
@@ -60,7 +61,7 @@ var init = (pathFolderLog, hashTag, enableConsole = true, clearBeforeStart = fal
       console.log(`[${time}] [${chalkFunc(tag)}] ${chalkFuncBackground}`);
     }
     if (isFoundPathFolderLog === true) {
-      writeFile_default(pathFolderLog, `[${time}] [${tag}] ${msg}`);
+      append(pathFolderLog, `[${time}] [${tag}] ${msg}`);
     }
   };
   return {

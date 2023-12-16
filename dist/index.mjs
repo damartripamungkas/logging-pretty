@@ -6,8 +6,9 @@ import dayjs from "dayjs";
 var time_default = () => dayjs().format("YYYY-MM-DD HH:mm:ss:SSS");
 
 // src/writeFile.ts
-import { appendFile } from "fs/promises";
-var writeFile_default = (pathFile, msg) => appendFile(pathFile, msg + "\n");
+import { appendFile, writeFile } from "fs/promises";
+var append = (pathFile, msg) => appendFile(pathFile, msg + "\n");
+var write = (pathFile, msg) => writeFile(pathFile, msg);
 
 // src/log.ts
 var init = (pathFolderLog, hashTag, enableConsole = true, clearBeforeStart = false) => {
@@ -15,7 +16,7 @@ var init = (pathFolderLog, hashTag, enableConsole = true, clearBeforeStart = fal
   const isFoundPathFolderLog = pathFolderLog === null || pathFolderLog === void 0 ? null : true;
   if (clearBeforeStart === true && isFoundPathFolderLog === true) {
     console.clear();
-    writeFile_default(pathFolderLog, "");
+    write(pathFolderLog, "");
   }
   const renderLog = (tag, msg, chalkFunc, chalkFuncBackground) => {
     const time = time_default();
@@ -25,7 +26,7 @@ var init = (pathFolderLog, hashTag, enableConsole = true, clearBeforeStart = fal
       console.log(`[${time}] [${chalkFunc(tag)}] ${chalkFuncBackground}`);
     }
     if (isFoundPathFolderLog === true) {
-      writeFile_default(pathFolderLog, `[${time}] [${tag}] ${msg}`);
+      append(pathFolderLog, `[${time}] [${tag}] ${msg}`);
     }
   };
   return {
