@@ -5,7 +5,7 @@ type TypeArgs = string | null | undefined;
  * @param pathFolderLog example "./db.log" if path dont have file, script will create and write new file
  * @returns object
  */
-declare const init: (pathFolderLog: TypeArgs, hashTag: TypeArgs, enableConsole?: boolean) => {
+declare const init: (pathFolderLog: TypeArgs, hashTag: TypeArgs, enableConsole?: boolean, clearBeforeStart?: boolean) => {
     info: (msg: string) => void;
     warn: (msg: string) => void;
     error: (msg: string) => void;

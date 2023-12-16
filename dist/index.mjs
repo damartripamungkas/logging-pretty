@@ -10,9 +10,13 @@ import { appendFile } from "fs/promises";
 var writeFile_default = (pathFile, msg) => appendFile(pathFile, msg + "\n");
 
 // src/log.ts
-var init = (pathFolderLog, hashTag, enableConsole = true) => {
+var init = (pathFolderLog, hashTag, enableConsole = true, clearBeforeStart = false) => {
   const { red, green, yellow, cyan, blue, bgRed } = chalk;
   const isFoundPathFolderLog = pathFolderLog === null || pathFolderLog === void 0 ? null : true;
+  if (clearBeforeStart === true && isFoundPathFolderLog === true) {
+    console.clear();
+    writeFile_default(pathFolderLog, "");
+  }
   const renderLog = (tag, msg, chalkFunc, chalkFuncBackground) => {
     const time = time_default();
     msg = hashTag === void 0 || hashTag === null ? msg : `#${hashTag} ${msg}`;
