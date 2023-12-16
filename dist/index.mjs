@@ -11,11 +11,10 @@ var append = (pathFile, msg) => appendFile(pathFile, msg + "\n");
 var write = (pathFile, msg) => writeFile(pathFile, msg);
 
 // src/log.ts
-var init = (pathFolderLog, hashTag, enableConsole = true, clearBeforeStart = false) => {
+var init = (pathFolderLog, hashTag, enableConsole = true, clearBeforeStartForFile = false) => {
   const { red, green, yellow, cyan, blue, bgRed } = chalk;
   const isFoundPathFolderLog = pathFolderLog === null || pathFolderLog === void 0 ? null : true;
-  if (clearBeforeStart === true && isFoundPathFolderLog === true) {
-    console.clear();
+  if (clearBeforeStartForFile === true && isFoundPathFolderLog === true) {
     write(pathFolderLog, "");
   }
   const renderLog = (tag, msg, chalkFunc, chalkFuncBackground) => {

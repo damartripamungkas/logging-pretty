@@ -46,11 +46,10 @@ var append = (pathFile, msg) => (0, import_promises.appendFile)(pathFile, msg + 
 var write = (pathFile, msg) => (0, import_promises.writeFile)(pathFile, msg);
 
 // src/log.ts
-var init = (pathFolderLog, hashTag, enableConsole = true, clearBeforeStart = false) => {
+var init = (pathFolderLog, hashTag, enableConsole = true, clearBeforeStartForFile = false) => {
   const { red, green, yellow, cyan, blue, bgRed } = import_chalk.default;
   const isFoundPathFolderLog = pathFolderLog === null || pathFolderLog === void 0 ? null : true;
-  if (clearBeforeStart === true && isFoundPathFolderLog === true) {
-    console.clear();
+  if (clearBeforeStartForFile === true && isFoundPathFolderLog === true) {
     write(pathFolderLog, "");
   }
   const renderLog = (tag, msg, chalkFunc, chalkFuncBackground) => {
