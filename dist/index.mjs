@@ -8,36 +8,35 @@ var time_default = () => dayjs().format("YYYY-MM-DD HH:mm:ss:SSS");
 // src/writeFile.ts
 import { appendFile, writeFile } from "fs/promises";
 var append = (pathFile, msg) => appendFile(pathFile, msg + "\n");
-var write = (pathFile, msg) => writeFile(pathFile, msg);
 
 // src/log.ts
-var init = (pathFolderLog, hashTag, enableConsole = true, clearBeforeStartForFile = false) => {
+var init = (pathFile, uniqTag, force) => {
   const { red, green, yellow, cyan, blue, bgRed } = chalk;
-  const isFoundPathFolderLog = pathFolderLog === null || pathFolderLog === void 0 ? null : true;
-  if (clearBeforeStartForFile === true && isFoundPathFolderLog === true) {
-    write(pathFolderLog, "");
-  }
-  const renderLog = (tag, msg, chalkFunc, chalkFuncBackground) => {
+  const isFoundPathFolderLog = pathFile === null || pathFile === void 0 ? false : true;
+  force = force ? force : isFoundPathFolderLog ? "all" : "console";
+  const renderLog = (tag, msg, colorUniqTag, colorMsg) => {
+    msg = uniqTag === void 0 || uniqTag === null ? msg : `#${uniqTag} ${msg}`;
+    colorMsg = colorMsg === void 0 ? msg : colorMsg(msg);
     const time = time_default();
-    msg = hashTag === void 0 || hashTag === null ? msg : `#${hashTag} ${msg}`;
-    chalkFuncBackground = chalkFuncBackground === void 0 ? msg : chalkFuncBackground(msg);
-    if (enableConsole === true) {
-      console.log(`[${time}] [${chalkFunc(tag)}] ${chalkFuncBackground}`);
+    if (force == "console" || force == "all") {
+      console.log(`[${time}] [${colorUniqTag(tag)}] ${colorMsg}`);
     }
-    if (isFoundPathFolderLog === true) {
-      append(pathFolderLog, `[${time}] [${tag}] ${msg}`);
+    if (isFoundPathFolderLog) {
+      if (force == "file" || force == "all") {
+        append(pathFile, `[${time}] [${tag}] ${msg}`).then((res) => console.log({ res }));
+      }
     }
   };
   return {
     info: (msg) => renderLog("INFO", msg, green, void 0),
     warn: (msg) => renderLog("WARN", msg, yellow, yellow),
-    error: (msg) => renderLog("ERR", msg, red, red),
+    error: (msg) => renderLog("ERROR", msg, red, red),
     success: (msg) => renderLog("SUCCESS", msg, green, green),
     debug: (msg) => renderLog("DEBUG", msg, cyan, cyan),
     trace: (msg) => renderLog("TRACE", msg, blue, blue),
     fatal: (msg) => renderLog("FATAL", msg, red, bgRed),
-    custom: (tag, msg, colorTag = chalk.bold, colorMsg = chalk.white) => renderLog(tag, msg, colorTag, colorMsg),
-    listColor: chalk,
+    custom: (tag, msg, colorUniqTag = chalk.bold, colorMsg = chalk.white) => renderLog(tag, msg, colorUniqTag, colorMsg),
+    _listColor: chalk,
     _renderLog: renderLog
   };
 };

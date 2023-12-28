@@ -9,7 +9,7 @@ type TypeArgs = string | null
  * @param force force mode, if "pathFile" is set but this is set to "console" it will not write to the log file.
  * @returns object
  */
-const init = (pathFile: TypeArgs, uniqTag: TypeArgs, force?: "console" | "file" | "all") => {
+const init = (pathFile: TypeArgs, uniqTag?: TypeArgs, force?: "console" | "file" | "all") => {
   const { red, green, yellow, cyan, blue, bgRed } = chalk
   const isFoundPathFolderLog = pathFile === null || pathFile === undefined ? false : true
   force = force ? force : isFoundPathFolderLog ? "all" : "console"
