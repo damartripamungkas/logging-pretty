@@ -1,6 +1,6 @@
 import chalk from "chalk"
 import dayjs from "dayjs"
-import { createWriteStream } from "node:fs"
+import { appendFile } from "node:fs/promises"
 type TypeArgs = string | null
 
 const getTimeNow = () => {
@@ -17,11 +17,6 @@ const init = (pathFile: TypeArgs, uniqTag?: TypeArgs, force?: "console" | "file"
   const { red, green, yellow, cyan, blue, bgRed } = chalk
   const isFoundPathFile = pathFile === null || pathFile === undefined ? false : true
   force = force ? force : isFoundPathFile ? "all" : "console"
-  let stream: ReturnType<typeof createWriteStream>
-
-  if (isFoundPathFile) {
-    stream = createWriteStream(pathFile, { flags: "a" })
-  }
 
   const renderLog = (tag: string, msg: string, colorUniqTag: any, colorMsg: any) => {
     msg = uniqTag === undefined || uniqTag === null ? msg : `#${uniqTag} ${msg}`
@@ -34,7 +29,7 @@ const init = (pathFile: TypeArgs, uniqTag?: TypeArgs, force?: "console" | "file"
 
     if (isFoundPathFile) {
       if (force == "file" || force == "all") {
-        stream.write(`[${time}] [${tag}] ${msg}\n`)
+        appendFile(pathFile, `[${time}] [${tag}] ${msg}\n`)
       }
     }
   }
