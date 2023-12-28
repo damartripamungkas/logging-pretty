@@ -1,29 +1,29 @@
 // src/log.ts
 import chalk from "chalk";
-
-// src/time.ts
 import dayjs from "dayjs";
-var time_default = () => dayjs().format("YYYY-MM-DD HH:mm:ss:SSS");
-
-// src/writeFile.ts
-import { appendFile, writeFile } from "fs/promises";
-var append = (pathFile, msg) => appendFile(pathFile, msg + "\n");
-
-// src/log.ts
+import { createWriteStream } from "fs";
+var getTimeNow = () => {
+  return dayjs().format("YYYY-MM-DD HH:mm:ss:SSS");
+};
 var init = (pathFile, uniqTag, force) => {
   const { red, green, yellow, cyan, blue, bgRed } = chalk;
-  const isFoundPathFolderLog = pathFile === null || pathFile === void 0 ? false : true;
-  force = force ? force : isFoundPathFolderLog ? "all" : "console";
+  const isFoundPathFile = pathFile === null || pathFile === void 0 ? false : true;
+  force = force ? force : isFoundPathFile ? "all" : "console";
+  let stream;
+  if (isFoundPathFile) {
+    stream = createWriteStream(pathFile, { flags: "a" });
+  }
   const renderLog = (tag, msg, colorUniqTag, colorMsg) => {
     msg = uniqTag === void 0 || uniqTag === null ? msg : `#${uniqTag} ${msg}`;
     colorMsg = colorMsg === void 0 ? msg : colorMsg(msg);
-    const time = time_default();
+    const time = getTimeNow();
     if (force == "console" || force == "all") {
       console.log(`[${time}] [${colorUniqTag(tag)}] ${colorMsg}`);
     }
-    if (isFoundPathFolderLog) {
+    if (isFoundPathFile) {
       if (force == "file" || force == "all") {
-        append(pathFile, `[${time}] [${tag}] ${msg}`);
+        stream.write(`[${time}] [${tag}] ${msg}
+`);
       }
     }
   };
