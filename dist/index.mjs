@@ -1,7 +1,7 @@
 // src/log.ts
 import chalk from "chalk";
 import dayjs from "dayjs";
-import { createWriteStream } from "fs";
+import { appendFile } from "fs/promises";
 var getTimeNow = () => {
   return dayjs().format("YYYY-MM-DD HH:mm:ss:SSS");
 };
@@ -9,10 +9,6 @@ var init = (pathFile, uniqTag, force) => {
   const { red, green, yellow, cyan, blue, bgRed } = chalk;
   const isFoundPathFile = pathFile === null || pathFile === void 0 ? false : true;
   force = force ? force : isFoundPathFile ? "all" : "console";
-  let stream;
-  if (isFoundPathFile) {
-    stream = createWriteStream(pathFile, { flags: "a" });
-  }
   const renderLog = (tag, msg, colorUniqTag, colorMsg) => {
     msg = uniqTag === void 0 || uniqTag === null ? msg : `#${uniqTag} ${msg}`;
     colorMsg = colorMsg === void 0 ? msg : colorMsg(msg);
@@ -22,7 +18,7 @@ var init = (pathFile, uniqTag, force) => {
     }
     if (isFoundPathFile) {
       if (force == "file" || force == "all") {
-        stream.write(`[${time}] [${tag}] ${msg}
+        appendFile(pathFile, `[${time}] [${tag}] ${msg}
 `);
       }
     }

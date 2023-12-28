@@ -36,7 +36,7 @@ module.exports = __toCommonJS(src_exports);
 // src/log.ts
 var import_chalk = __toESM(require("chalk"));
 var import_dayjs = __toESM(require("dayjs"));
-var import_node_fs = require("fs");
+var import_promises = require("fs/promises");
 var getTimeNow = () => {
   return (0, import_dayjs.default)().format("YYYY-MM-DD HH:mm:ss:SSS");
 };
@@ -44,10 +44,6 @@ var init = (pathFile, uniqTag, force) => {
   const { red, green, yellow, cyan, blue, bgRed } = import_chalk.default;
   const isFoundPathFile = pathFile === null || pathFile === void 0 ? false : true;
   force = force ? force : isFoundPathFile ? "all" : "console";
-  let stream;
-  if (isFoundPathFile) {
-    stream = (0, import_node_fs.createWriteStream)(pathFile, { flags: "a" });
-  }
   const renderLog = (tag, msg, colorUniqTag, colorMsg) => {
     msg = uniqTag === void 0 || uniqTag === null ? msg : `#${uniqTag} ${msg}`;
     colorMsg = colorMsg === void 0 ? msg : colorMsg(msg);
@@ -57,7 +53,7 @@ var init = (pathFile, uniqTag, force) => {
     }
     if (isFoundPathFile) {
       if (force == "file" || force == "all") {
-        stream.write(`[${time}] [${tag}] ${msg}
+        (0, import_promises.appendFile)(pathFile, `[${time}] [${tag}] ${msg}
 `);
       }
     }
