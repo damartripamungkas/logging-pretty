@@ -1,7 +1,11 @@
 import chalk from "chalk"
-import getTimeNow from "./time"
-import { append } from "./writeFile"
+import dayjs from "dayjs"
+import { createWriteStream } from "node:fs"
 type TypeArgs = string | null
+
+const getTimeNow = () => {
+  return dayjs().format("YYYY-MM-DD HH:mm:ss:SSS")
+}
 
 /**
  * @param pathFile example "./db.log" if path dont have file, script will create and write new file
@@ -11,8 +15,13 @@ type TypeArgs = string | null
  */
 const init = (pathFile: TypeArgs, uniqTag?: TypeArgs, force?: "console" | "file" | "all") => {
   const { red, green, yellow, cyan, blue, bgRed } = chalk
-  const isFoundPathFolderLog = pathFile === null || pathFile === undefined ? false : true
-  force = force ? force : isFoundPathFolderLog ? "all" : "console"
+  const isFoundPathFile = pathFile === null || pathFile === undefined ? false : true
+  force = force ? force : isFoundPathFile ? "all" : "console"
+  let stream: ReturnType<typeof createWriteStream>
+
+  if (isFoundPathFile) {
+    stream = createWriteStream(pathFile, { flags: "a" })
+  }
 
   const renderLog = (tag: string, msg: string, colorUniqTag: any, colorMsg: any) => {
     msg = uniqTag === undefined || uniqTag === null ? msg : `#${uniqTag} ${msg}`
@@ -23,9 +32,9 @@ const init = (pathFile: TypeArgs, uniqTag?: TypeArgs, force?: "console" | "file"
       console.log(`[${time}] [${colorUniqTag(tag)}] ${colorMsg}`)
     }
 
-    if (isFoundPathFolderLog) {
+    if (isFoundPathFile) {
       if (force == "file" || force == "all") {
-        append(pathFile, `[${time}] [${tag}] ${msg}`)
+        stream.write(`[${time}] [${tag}] ${msg}\n`)
       }
     }
   }
