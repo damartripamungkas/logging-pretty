@@ -25,7 +25,7 @@ const init = (pathFile: TypeArgs, uniqTag?: TypeArgs, force?: "console" | "file"
 
     if (isFoundPathFolderLog) {
       if (force == "file" || force == "all") {
-        append(pathFile, `[${time}] [${tag}] ${msg}`).then((res) => console.log({ res }))
+        append(pathFile, `[${time}] [${tag}] ${msg}`)
       }
     }
   }
