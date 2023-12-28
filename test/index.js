@@ -1,5 +1,7 @@
 // CommonJs (require)
 const { default: init } = require("..");
-const log = init();
+const log = init("./log.txt", null, "all");
 
-log.info("hello world");
+setInterval(() => {
+  log.info(`hello world, random: ${Math.random()}`);
+}, 1000);
