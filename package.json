@@ -1,11 +1,12 @@
 {
   "name": "logging-pretty",
-  "version": "1.6.7",
+  "version": "1.6.8",
   "description": "Logging your message with pretty color with node.js",
   "scripts": {
     "test": "node test/index.js",
     "build:tsup": "rm -rf dist/ && tsup ./src/index.ts --format cjs,esm --dts",
-    "build:tsc": "rm -rf dist/ && tsc"
+    "build:tsc": "rm -rf dist/ && tsc",
+    "publish:npm": "npm run build:tsup && npm publish"
   },
   "homepage": "https://github.com/damartripamungkas/logging-pretty",
   "repository": {
