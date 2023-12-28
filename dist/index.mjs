@@ -23,7 +23,7 @@ var init = (pathFile, uniqTag, force) => {
     }
     if (isFoundPathFolderLog) {
       if (force == "file" || force == "all") {
-        append(pathFile, `[${time}] [${tag}] ${msg}`).then((res) => console.log({ res }));
+        append(pathFile, `[${time}] [${tag}] ${msg}`);
       }
     }
   };

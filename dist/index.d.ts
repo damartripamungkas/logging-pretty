@@ -7,7 +7,7 @@ type TypeArgs = string | null;
  * @param force force mode, if "pathFile" is set but this is set to "console" it will not write to the log file.
  * @returns object
  */
-declare const init: (pathFile: TypeArgs, uniqTag: TypeArgs, force?: "console" | "file" | "all") => {
+declare const init: (pathFile: TypeArgs, uniqTag?: TypeArgs, force?: "console" | "file" | "all") => {
     info: (msg: string) => void;
     warn: (msg: string) => void;
     error: (msg: string) => void;
