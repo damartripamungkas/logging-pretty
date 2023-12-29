@@ -11,12 +11,14 @@ const getTimeNow = () => {
  * @param pathFile example "./db.log" if path dont have file, script will create and write new file
  * @param uniqTag unique tag for each log, if this is set then the log output will start with this #....
  * @param force force mode, if "pathFile" is set but this is set to "console" it will not write to the log file.
+ * @param hookMid returns a message via callback before doing console.log and appendFile
  * @returns object
  */
-const init = (pathFile: TypeArgs, uniqTag?: TypeArgs, force?: "console" | "file" | "all") => {
+const init = (pathFile: TypeArgs, uniqTag?: TypeArgs, force?: "console" | "file" | "all", hookMid?: (msg: string) => void) => {
   const { red, green, yellow, cyan, blue, bgRed } = chalk
   const isFoundPathFile = pathFile === null || pathFile === undefined ? false : true
   force = force ? force : isFoundPathFile ? "all" : "console"
+  hookMid = typeof hookMid == "function" ? hookMid : (msg: string) => msg
 
   const renderLog = (tag: string, msg: string, colorUniqTag: any, colorMsg: any) => {
     msg = uniqTag === undefined || uniqTag === null ? msg : `#${uniqTag} ${msg}`
@@ -27,11 +29,14 @@ const init = (pathFile: TypeArgs, uniqTag?: TypeArgs, force?: "console" | "file"
       console.log(`[${time}] [${colorUniqTag(tag)}] ${colorMsg}`)
     }
 
+    const txtFile = `[${time}] [${tag}] ${msg}\n`
     if (isFoundPathFile) {
       if (force == "file" || force == "all") {
-        appendFile(pathFile, `[${time}] [${tag}] ${msg}\n`)
+        appendFile(pathFile, txtFile)
       }
     }
+
+    hookMid(txtFile)
   }
 
   return {
