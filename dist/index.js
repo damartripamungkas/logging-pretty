@@ -40,10 +40,11 @@ var import_promises = require("fs/promises");
 var getTimeNow = () => {
   return (0, import_dayjs.default)().format("YYYY-MM-DD HH:mm:ss:SSS");
 };
-var init = (pathFile, uniqTag, force) => {
+var init = (pathFile, uniqTag, force, hookMid) => {
   const { red, green, yellow, cyan, blue, bgRed } = import_chalk.default;
   const isFoundPathFile = pathFile === null || pathFile === void 0 ? false : true;
   force = force ? force : isFoundPathFile ? "all" : "console";
+  hookMid = typeof hookMid == "function" ? hookMid : (msg) => msg;
   const renderLog = (tag, msg, colorUniqTag, colorMsg) => {
     msg = uniqTag === void 0 || uniqTag === null ? msg : `#${uniqTag} ${msg}`;
     colorMsg = colorMsg === void 0 ? msg : colorMsg(msg);
@@ -51,12 +52,14 @@ var init = (pathFile, uniqTag, force) => {
     if (force == "console" || force == "all") {
       console.log(`[${time}] [${colorUniqTag(tag)}] ${colorMsg}`);
     }
+    const txtFile = `[${time}] [${tag}] ${msg}
+`;
     if (isFoundPathFile) {
       if (force == "file" || force == "all") {
-        (0, import_promises.appendFile)(pathFile, `[${time}] [${tag}] ${msg}
-`);
+        (0, import_promises.appendFile)(pathFile, txtFile);
       }
     }
+    hookMid(txtFile);
   };
   return {
     info: (msg) => renderLog("INFO", msg, green, void 0),

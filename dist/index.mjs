@@ -5,10 +5,11 @@ import { appendFile } from "fs/promises";
 var getTimeNow = () => {
   return dayjs().format("YYYY-MM-DD HH:mm:ss:SSS");
 };
-var init = (pathFile, uniqTag, force) => {
+var init = (pathFile, uniqTag, force, hookMid) => {
   const { red, green, yellow, cyan, blue, bgRed } = chalk;
   const isFoundPathFile = pathFile === null || pathFile === void 0 ? false : true;
   force = force ? force : isFoundPathFile ? "all" : "console";
+  hookMid = typeof hookMid == "function" ? hookMid : (msg) => msg;
   const renderLog = (tag, msg, colorUniqTag, colorMsg) => {
     msg = uniqTag === void 0 || uniqTag === null ? msg : `#${uniqTag} ${msg}`;
     colorMsg = colorMsg === void 0 ? msg : colorMsg(msg);
@@ -16,12 +17,14 @@ var init = (pathFile, uniqTag, force) => {
     if (force == "console" || force == "all") {
       console.log(`[${time}] [${colorUniqTag(tag)}] ${colorMsg}`);
     }
+    const txtFile = `[${time}] [${tag}] ${msg}
+`;
     if (isFoundPathFile) {
       if (force == "file" || force == "all") {
-        appendFile(pathFile, `[${time}] [${tag}] ${msg}
-`);
+        appendFile(pathFile, txtFile);
       }
     }
+    hookMid(txtFile);
   };
   return {
     info: (msg) => renderLog("INFO", msg, green, void 0),
