@@ -3,54 +3,89 @@
 </h1>
 
 <p align="center">
- <img src="https://camo.githubusercontent.com/3dbcfa4997505c80ef928681b291d33ecfac2dabf563eb742bb3e269a5af909c/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f6c6963656e73652f496c65726961796f2f6d61726b646f776e2d6261646765733f7374796c653d666f722d7468652d6261646765" alt="licensemit" />
-  <img src="https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E" alt="javascript" />
-  <img src="https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white" alt="nodejs" />
+  <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/damartripamungkas/logging-pretty?color=04D361&labelColor=000000">
+  
+  <a href="#">
+    <img alt="Made by" src="https://img.shields.io/static/v1?label=made%20by&message=damartripamungkas&color=04D361&labelColor=000000">
+  </a>
+  
+  <img alt="Repository size" src="https://img.shields.io/github/repo-size/damartripamungkas/logging-pretty?color=04D361&labelColor=000000">
+  
+  <a href="#">
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/damartripamungkas/logging-pretty?color=04D361&labelColor=000000">
+  </a>
 </p>
-
-> > Awesome logging with option save to file
-> > <img src="https://raw.githubusercontent.com/damartripamungkas/logging-pretty/master/screenshots/terminal.png">
 
 <br>
 
-### 💻 Step to install
+> Awesome logging with option save to file
+> <img src="https://raw.githubusercontent.com/damartripamungkas/logging-pretty/master/screenshots/terminal.png">
+
+<br>
+
+### 💻 Step to install :
 
 ```
-npm install --production logging-pretty
+npm install logging-pretty
 ```
 
-### ✏️ Example
+### ✏️ Example :
 
 #### Typescript
 
 ```javascript
 import init from "logging-pretty";
-const log = init(null, "anything"); // (optional) change params 1 (null) to file path, example "./db.log"
-log.info("hello world"); // output = [INFO] #anything hello world
+const log = init(null, "anything");
+log.info("hello world"); // output = [0000-00-00 00:00:00:000] [INFO] #anything hello world
 ```
 
 #### ESM (import)
 
 ```javascript
 import init from "logging-pretty";
-const log = init.default(null, "anything"); // (optional) change params 1 (null) to file path, example "./db.log"
-log.info("hello world"); // output = [INFO] #anything hello world
+const log = init.default(null, "anything");
+log.info("hello world"); // output = [0000-00-00 00:00:00:000] [INFO] #anything hello world
 ```
 
 #### CommonJs (require)
 
 ```javascript
 const { default: init } = require("logging-pretty");
-const log = init(null, "anything"); // (optional) change params 1 (null) to file path, example "./db.log"
-log.info("hello world"); // output = [INFO] #anything hello world
+const log = init(null, "anything");
+log.info("hello world"); // output = [0000-00-00 00:00:00:000] [INFO] #anything hello world
 ```
 
-### 🧾 Pre-Requisistes
+#### Usage
+
+```javascript
+const { default: init } = require("logging-pretty");
+
+let countTask = 16;
+let countTaskCompleted = 0;
+let percent = 0;
+
+/**
+ * @param pathFile [optional] example "./db.log" if path dont have file, script will create and write new file
+ * @param uniqTag [optional] unique tag for each log, if this is set then the log output will start with this #....
+ * @param force [optional] force mode, if "pathFile" is set but this is set to "console" it will not write to the log file.
+ * @param mid [optional] middleware before write to console and file, must be return string
+ * @returns object
+ */
+const log = init(null, "anything", "all", (msg) => {
+  countTaskCompleted += 1;
+  percent = (countTaskCompleted / countTask) * 100;
+  return `${percent}%. ${msg}`;
+});
+
+log.info("task completed"); // output = [0000-00-00 00:00:00:000] [INFO] #anything 6.25%. task completed
+```
+
+### 🧾 Pre-Requisistes :
 
 ```
 node.js
 ```
 
-### 📝 License
+### 📝 License :
 
 Licensed under the [MIT License](./LICENSE).
