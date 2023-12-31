@@ -5,7 +5,7 @@
   "scripts": {
     "test": "node test/index.js",
     "build": "rm -rf dist/ && tsup ./src/index.ts --format cjs,esm --dts",
-    "publish:npm": "npm run build:tsup && npm publish"
+    "publish:npm": "npm run build && npm publish"
   },
   "homepage": "https://github.com/damartripamungkas/logging-pretty",
   "repository": {
