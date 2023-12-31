@@ -72,12 +72,17 @@ let percent = 0;
  * @returns object
  */
 const log = init(null, "anything", "all", (msg) => {
-  countTaskCompleted += 1;
-  percent = (countTaskCompleted / countTask) * 100;
-  return `${percent}%. ${msg}`;
+  if (tag == "INFO") {
+    countTaskCompleted += 1;
+    percent = (countTaskCompleted / countTask) * 100;
+    return `${percent}%. ${msg}`;
+  }
+
+  return msg;
 });
 
-log.info("task completed"); // output = [0000-00-00 00:00:00:000] [INFO] #anything 6.25%. task completed
+log.info("task writeFile completed"); // output = [0000-00-00 00:00:00:000] [INFO] #anything 6.25%. task completed
+log.info("task appendFile completed"); // output = [0000-00-00 00:00:00:000] [INFO] #anything 12.5%. task completed
 ```
 
 ### 🧾 Pre-Requisistes :
