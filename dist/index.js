@@ -46,7 +46,7 @@ var init = (pathFile, uniqTag, force, mid) => {
   force = force ? force : isFoundPathFile ? "all" : "console";
   mid = mid === null || mid === void 0 ? (msg) => msg : mid;
   const renderLog = (tag, msg, colorUniqTag, colorMsg) => {
-    msg = mid(msg);
+    msg = mid(msg, tag);
     msg = uniqTag === void 0 || uniqTag === null ? msg : `#${uniqTag} ${msg}`;
     const time = getTimeNow();
     if (force == "console" || force == "all") {

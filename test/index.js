@@ -4,10 +4,14 @@ const { default: init } = require("..");
 let countTask = 16;
 let countTaskCompleted = 0;
 let percent = 0;
-const log = init("./log.txt", null, "console", (msg) => {
-  countTaskCompleted += 1;
-  percent = (countTaskCompleted / countTask) * 100;
-  return `${percent}%. ${msg}`;
+const log = init("./log.txt", null, "console", (msg, tag) => {
+  if (tag == "INFO") {
+    countTaskCompleted += 1;
+    percent = (countTaskCompleted / countTask) * 100;
+    return `${percent}%. ${msg}`;
+  }
+
+  return msg;
 });
 
 setInterval(() => {

@@ -1,12 +1,12 @@
 import chalk from 'chalk';
 
 type TypeArgs = string | null;
-type TypeMid = (msg: string) => string;
+type TypeMid = (msg: string, tag: string) => string;
 /**
- * @param pathFile example "./db.log" if path dont have file, script will create and write new file
- * @param uniqTag unique tag for each log, if this is set then the log output will start with this #....
- * @param force force mode, if "pathFile" is set but this is set to "console" it will not write to the log file.
- * @param mid middleware before write to console and file, must be return string
+ * @param pathFile [optional] example "./db.log" if path dont have file, script will create and write new file
+ * @param uniqTag [optional] unique tag for each log, if this is set then the log output will start with this #....
+ * @param force [optional] force mode, if "pathFile" is set but this is set to "console" it will not write to the log file.
+ * @param mid [optional] middleware before write to console and file, must be return string
  * @returns object
  */
 declare const init: (pathFile?: TypeArgs, uniqTag?: TypeArgs, force?: "console" | "file" | "all", mid?: TypeMid) => {
