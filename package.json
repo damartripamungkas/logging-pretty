@@ -4,8 +4,7 @@
   "description": "Logging your message with pretty color with node.js",
   "scripts": {
     "test": "node test/index.js",
-    "build:tsup": "rm -rf dist/ && tsup ./src/index.ts --format cjs,esm --dts",
-    "build:tsc": "rm -rf dist/ && tsc",
+    "build": "rm -rf dist/ && tsup ./src/index.ts --format cjs,esm --dts",
     "publish:npm": "npm run build:tsup && npm publish"
   },
   "homepage": "https://github.com/damartripamungkas/logging-pretty",
