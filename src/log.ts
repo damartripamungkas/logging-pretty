@@ -3,7 +3,7 @@ import dayjs from "dayjs"
 import { appendFile } from "node:fs/promises"
 
 type TypeArgs = string | null
-type TypeMid = (msg: string) => string
+type TypeMid = (msg: string, tag: string) => string
 
 const getTimeNow = () => {
   return dayjs().format("YYYY-MM-DD HH:mm:ss:SSS")
@@ -23,7 +23,7 @@ const init = (pathFile?: TypeArgs, uniqTag?: TypeArgs, force?: "console" | "file
   mid = mid === null || mid === undefined ? (msg: string) => msg : mid
 
   const renderLog = (tag: string, msg: string, colorUniqTag: any, colorMsg: any) => {
-    msg = mid(msg)
+    msg = mid(msg, tag)
     msg = uniqTag === undefined || uniqTag === null ? msg : `#${uniqTag} ${msg}`
 
     const time = getTimeNow()
