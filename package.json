@@ -1,11 +1,11 @@
 {
   "name": "logging-pretty",
-  "version": "1.8.8",
+  "version": "2.0.0",
   "description": "Logging your message with pretty color with node.js",
   "scripts": {
-    "test": "node test/index.js",
-    "build": "rm -rf dist/ && tsup ./src/index.ts --format cjs,esm --dts",
-    "publish:npm": "npm run build && npm publish"
+    "test": "node test/test.js",
+    "build": "tsup",
+    "publish:package": "npm run build && npm publish"
   },
   "homepage": "https://github.com/damartripamungkas/logging-pretty",
   "repository": {
@@ -21,11 +21,14 @@
     "logging-pretty",
     "logger-pretty",
     "log-pretty",
-    "log-beautiful"
+    "log-beautiful",
+    "backend",
+    "frontend",
+    "nodejs"
   ],
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
+  "main": "./dist/src/index.js",
+  "module": "./dist/src/index.mjs",
+  "types": "./dist/src/index.d.ts",
   "files": [
     "dist"
   ],
@@ -36,9 +39,10 @@
     "dayjs": "^1.11.7"
   },
   "devDependencies": {
-    "@types/node": "^20.8.7",
-    "@typescript-eslint/eslint-plugin": "^6.8.0",
-    "@typescript-eslint/parser": "^6.8.0",
-    "eslint": "^8.52.0"
+    "@types/node": "^20.14.10",
+    "@typescript-eslint/eslint-plugin": "^7.16.0",
+    "@typescript-eslint/parser": "^7.16.0",
+    "eslint": "^9.7.0",
+    "tsup": "^8.1.0"
   }
 }
