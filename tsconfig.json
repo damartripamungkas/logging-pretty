@@ -1,16 +1,9 @@
 {
   "compilerOptions": {
-    "noImplicitUseStrict": false,
-    "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true,
-    "declaration": true,
-    "esModuleInterop": true,
-    "noImplicitAny": true,
-    "noUnusedLocals": true,
-    "outDir": "dist",
-    "sourceMap": false,
-    "strict": false,
-    "target": "ES2020",
-    "module": "CommonJS"
-  }
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "allowSyntheticDefaultImports": true
+  },
+  "include": ["src/*.ts", "src/**/*.ts"]
 }
