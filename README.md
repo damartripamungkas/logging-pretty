@@ -18,8 +18,7 @@
 
 <br>
 
-> Awesome logging with option save to file
-> <img src="https://raw.githubusercontent.com/damartripamungkas/logging-pretty/master/screenshots/terminal.png">
+<img src="./screenshots/terminal.png">
 
 <br>
 
@@ -31,66 +30,44 @@ npm install logging-pretty
 
 ### ✏️ Example :
 
-#### Typescript
-
 ```javascript
-import init from "logging-pretty";
-const log = init(null, "anything");
-log.info("hello world"); // output = [0000-00-00 00:00:00:000] [INFO] #anything hello world
-```
-
-#### ESM (import)
-
-```javascript
-import init from "logging-pretty";
-const log = init.default(null, "anything");
-log.info("hello world"); // output = [0000-00-00 00:00:00:000] [INFO] #anything hello world
-```
-
-#### CommonJs (require)
-
-```javascript
-const { default: init } = require("logging-pretty");
-const log = init(null, "anything");
-log.info("hello world"); // output = [0000-00-00 00:00:00:000] [INFO] #anything hello world
-```
-
-#### Usage
-
-```javascript
-const { default: init } = require("logging-pretty");
-
-let countTask = 16;
-let countTaskCompleted = 0;
-let percent = 0;
+const { loggingPretty } = require(`..`);
 
 /**
+ *
  * @param pathFile [optional] example "./db.log" if path dont have file, script will create and write new file
- * @param uniqTag [optional] unique tag for each log, if this is set then the log output will start with this #....
  * @param force [optional] force mode, if "pathFile" is set but this is set to "console" it will not write to the log file.
- * @param mid [optional] middleware before write to console and file, must be return string
+ * @param formatTime [optional] set format date time like YYYY-MM-DD HH:mm:ss.
+ * @param ovrRenderLog [optional] override function for render log.
+ * @param ovrWriteLog [optional] override function for write log in file.
  * @returns object
  */
-const log = init(null, "anything", "all", (msg) => {
-  if (tag == "INFO") {
-    countTaskCompleted += 1;
-    percent = (countTaskCompleted / countTask) * 100;
-    return `${percent}%. ${msg}`;
+const log = loggingPretty(
+  `./test/store.log`,
+  `all`,
+  `YYYY-MM-DD HH:mm:ss`,
+  ({ strTime, strTag, strStyleTag, strStyleMsg }) => {
+    // override render log
+    if (strTag == `INFO`)
+      console.log(`[${strTime}] ${strStyleTag}: -> -> ${strStyleMsg}`);
+    if (strTag == `FAIL`)
+      console.log(`[${strTime}] ${strStyleTag}: x x ${strStyleMsg}`);
   }
+);
 
-  return msg;
-});
-
-log.info("task writeFile completed"); // output = [0000-00-00 00:00:00:000] [INFO] #anything 6.25%. task completed
-log.info("task appendFile completed"); // output = [0000-00-00 00:00:00:000] [INFO] #anything 12.5%. task completed
+log.info(`info task`); // [2024-07-14 17:46:32] INFO: -> -> info task
+log.fail(`fail task`); // [2024-07-14 17:46:32] FAIL: x x fail task
 ```
 
 ### 🧾 Pre-Requisistes :
 
 ```
-node.js
+- node.js / bun.js / deno.js
+- (optional) typescript
+- (optional) commonJS
+- (optional) ESM
 ```
 
 ### 📝 License :
 
-Licensed under the [MIT License](./LICENSE).
+Licensed see [here](./LICENSE)
