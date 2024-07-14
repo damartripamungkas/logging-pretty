@@ -15,6 +15,7 @@
         "useTabs": false,
         "semi": false,
         "arrowParens": "always",
+        "trailingComma": "none",
         "bracketSameLine": false
       }
     },
@@ -26,7 +27,8 @@
         "useTabs": false,
         "semi": true,
         "arrowParens": "always",
-        "bracketSameLine": false
+        "bracketSameLine": false,
+        "trailingComma": "none"
       }
     }
   ]
