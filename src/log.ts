@@ -1,57 +1,83 @@
 import chalk from "chalk"
 import dayjs from "dayjs"
 import { appendFile } from "node:fs/promises"
+import { TypeArgs, TypeForce, TypeOvrFunction } from "./type"
+const { red, green, yellow, cyan, blue, bgRed, bold, white } = chalk
 
-type TypeArgs = string | null
-type TypeMid = (msg: string, tag: string) => string
-
-const getTimeNow = () => {
-  return dayjs().format("YYYY-MM-DD HH:mm:ss:SSS")
+const getTimeNow = (format: string) => {
+  return dayjs().format(format)
 }
 
 /**
+ *
  * @param pathFile [optional] example "./db.log" if path dont have file, script will create and write new file
- * @param uniqTag [optional] unique tag for each log, if this is set then the log output will start with this #....
  * @param force [optional] force mode, if "pathFile" is set but this is set to "console" it will not write to the log file.
- * @param mid [optional] middleware before write to console and file, must be return string
+ * @param formatTime [optional] set format date time like YYYY-MM-DD HH:mm:ss.
+ * @param ovrRenderLog [optional] override function for render log.
+ * @param ovrWriteLog [optional] override function for write log in file.
  * @returns object
  */
-const init = (pathFile?: TypeArgs, uniqTag?: TypeArgs, force?: "console" | "file" | "all", mid?: TypeMid) => {
-  const { red, green, yellow, cyan, blue, bgRed } = chalk
-  const isFoundPathFile = pathFile === null || pathFile === undefined ? false : true
-  force = force ? force : isFoundPathFile ? "all" : "console"
-  mid = mid === null || mid === undefined ? (msg: string) => msg : mid
+const initNew = (pathFile?: TypeArgs, force?: TypeForce, formatTime?: string, ovrRenderLog?: TypeOvrFunction, ovrWriteLog?: TypeOvrFunction) => {
+  const isHavePathFile = pathFile ? true : false
+  const isHaveForce = force ? true : false
+  const isHaveFormatTime = formatTime ? true : false
+  const isHaveOvrRenderLog = ovrRenderLog ? true : false
+  const isHaveOvrWriteLog = ovrWriteLog ? true : false
 
-  const renderLog = (tag: string, msg: string, colorUniqTag: any, colorMsg: any) => {
-    msg = mid(msg, tag)
-    msg = uniqTag === undefined || uniqTag === null ? msg : `#${uniqTag} ${msg}`
+  if (isHaveForce === false) {
+    if (isHavePathFile === true) {
+      force = `all`
+    } else {
+      force = `console`
+    }
+  }
 
-    const time = getTimeNow()
-    if (force == "console" || force == "all") {
-      colorMsg = colorMsg === undefined ? msg : colorMsg(msg)
-      console.log(`[${time}] [${colorUniqTag(tag)}] ${colorMsg}`)
+  if (isHaveFormatTime === false) {
+    formatTime = `YYYY-MM-DD HH:mm:ss:SSS`
+  }
+
+  const renderLog = (strTag: string, strMsg: string, colorTag: any, colorMsg: any) => {
+    const strTime = getTimeNow(formatTime)
+    const strStyleTag = colorTag(strTag)
+    if (force == `console` || force == `all`) {
+      let strStyleMsg = strMsg
+      if (colorMsg) {
+        strStyleMsg = colorMsg(strMsg)
+      }
+
+      if (isHaveOvrRenderLog === true) {
+        ovrRenderLog({ strTime, strTag, strStyleTag, strMsg, strStyleMsg })
+      } else {
+        console.log(`[${strTime}] [${strStyleTag}] ${strStyleMsg}`)
+      }
     }
 
-    const txtFile = `[${time}] [${tag}] ${msg}\n`
-    if (isFoundPathFile) {
-      if (force == "file" || force == "all") {
-        appendFile(pathFile, txtFile)
+    const txtFile = `[${strTime}] [${strTag}] ${strMsg}\n`
+    if (isHavePathFile === true) {
+      if (force == `file` || force == `all`) {
+        if (isHaveOvrWriteLog === true) {
+          ovrWriteLog({ strTime, strTag, strStyleTag, strMsg, strStyleMsg: strMsg })
+        } else {
+          appendFile(pathFile, txtFile)
+        }
       }
     }
   }
 
   return {
-    info: (msg: string) => renderLog("INFO", msg, green, undefined),
-    warn: (msg: string) => renderLog("WARN", msg, yellow, yellow),
-    error: (msg: string) => renderLog("ERROR", msg, red, red),
-    success: (msg: string) => renderLog("SUCCESS", msg, green, green),
-    debug: (msg: string) => renderLog("DEBUG", msg, cyan, cyan),
-    trace: (msg: string) => renderLog("TRACE", msg, blue, blue),
-    fatal: (msg: string) => renderLog("FATAL", msg, red, bgRed),
-    custom: (tag: string, msg: string, colorUniqTag = chalk.bold, colorMsg = chalk.white) => renderLog(tag, msg, colorUniqTag, colorMsg),
+    info: (msg: string) => renderLog(`INFO`, msg, green, undefined),
+    warn: (msg: string) => renderLog(`WARN`, msg, yellow, yellow),
+    error: (msg: string) => renderLog(`ERROR`, msg, red, red),
+    success: (msg: string) => renderLog(`SUCCESS`, msg, green, green),
+    failed: (msg: string) => renderLog(`FAILED`, msg, red, red),
+    fail: (msg: string) => renderLog(`FAIL`, msg, red, red),
+    debug: (msg: string) => renderLog(`DEBUG`, msg, cyan, cyan),
+    trace: (msg: string) => renderLog(`TRACE`, msg, blue, blue),
+    fatal: (msg: string) => renderLog(`FATAL`, msg, red, bgRed),
+    custom: (tag: string, msg: string, colorUniqTag = bold, colorMsg = white) => renderLog(tag, msg, colorUniqTag, colorMsg),
     _listColor: chalk,
-    _renderLog: renderLog,
+    _renderLog: renderLog
   }
 }
 
-export default init
+export default initNew

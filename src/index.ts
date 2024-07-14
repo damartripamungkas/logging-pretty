@@ -1,2 +1,5 @@
-import log from "./log";
-export default log;
+import log from "./log"
+
+const loggingPretty = log
+export { loggingPretty }
+export default loggingPretty
