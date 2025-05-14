@@ -8,6 +8,18 @@
       }
     },
     {
+      "files": "*.md",
+      "options": {
+        "printWidth": 500,
+        "tabWidth": 2,
+        "useTabs": false,
+        "semi": false,
+        "arrowParens": "always",
+        "trailingComma": "none",
+        "bracketSameLine": false
+      }
+    },
+    {
       "files": "*.ts",
       "options": {
         "printWidth": 200,
