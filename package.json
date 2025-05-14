@@ -1,9 +1,10 @@
 {
   "name": "logging-pretty",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Logging your message with pretty color with node.js",
   "scripts": {
-    "test": "node test/test.js",
+    "test-js": "node test/test.js",
+    "test-ts": "bun test/test.ts",
     "build": "tsup",
     "publish:package": "npm run build && npm publish"
   },
