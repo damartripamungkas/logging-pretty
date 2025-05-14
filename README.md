@@ -25,38 +25,35 @@
 ### 💻 Step to install :
 
 ```
-npm install logging-pretty
+npm i logging-pretty
 ```
 
 ### ✏️ Example :
 
-```javascript
-const { loggingPretty } = require(`..`);
+```typescript
+import { LoggingPretty } from "logging-pretty"
 
 /**
  *
- * @param pathFile [optional] example "./db.log" if path dont have file, script will create and write new file
  * @param force [optional] force mode, if "pathFile" is set but this is set to "console" it will not write to the log file.
+ * @param pathFile [optional] set path file for store log.
  * @param formatTime [optional] set format date time like YYYY-MM-DD HH:mm:ss.
- * @param ovrRenderLog [optional] override function for render log.
- * @param ovrWriteLog [optional] override function for write log in file.
  * @returns object
  */
-const log = loggingPretty(
-  `./test/store.log`,
-  `all`,
-  `YYYY-MM-DD HH:mm:ss`,
-  ({ strTime, strTag, strStyleTag, strStyleMsg }) => {
-    // override render log
-    if (strTag == `INFO`)
-      console.log(`[${strTime}] ${strStyleTag}: -> -> ${strStyleMsg}`);
-    if (strTag == `FAIL`)
-      console.log(`[${strTime}] ${strStyleTag}: x x ${strStyleMsg}`);
-  }
-);
+const log = new LoggingPretty({
+  force: `all`,
+  pathFile: `./test/store.log`,
+  formatTime: `YYYY-MM-DD HH:mm:ss`
+})
 
-log.info(`info task`); // [2024-07-14 17:46:32] INFO: -> -> info task
-log.fail(`fail task`); // [2024-07-14 17:46:32] FAIL: x x fail task
+log._renderLogToConsole = ({ strTime, strTag, strStyleTag, strStyleMsg }) => {
+  // override render log
+  if (strTag == `INFO`) console.log(`[${strTime}] ${strStyleTag}: -> -> ${strStyleMsg}`)
+  if (strTag == `FAIL`) console.log(`[${strTime}] ${strStyleTag}: x x ${strStyleMsg}`)
+}
+
+log.info(`info task`) // [2024-07-14 17:46:32] INFO: -> -> info task
+log.fail(`fail task`) // [2024-07-14 17:46:32] FAIL: x x fail task
 ```
 
 ### 🧾 Pre-Requisistes :
